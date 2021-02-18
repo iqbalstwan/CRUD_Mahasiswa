@@ -11,7 +11,7 @@ module.exports = {
   getDataMhs: (id) => {
     return new Promise((resolve, reject) => {
       connection.query(
-        "SELECT nama_matkul,nilai FROM data_nilai LEFT JOIN mahasiswa ON data_nilai.id_mhs= mahasiswa.id_mhs JOIN mata_kuliah ON data_nilai.id_matkul= mata_kuliah.id_matkul WHERE mahasiswa.id_mhs = ?",
+        "SELECT data_nilai.id_nilai,data_nilai.id_matkul,nama_matkul,nilai FROM data_nilai LEFT JOIN mahasiswa ON data_nilai.id_mhs= mahasiswa.id_mhs JOIN mata_kuliah ON data_nilai.id_matkul= mata_kuliah.id_matkul WHERE mahasiswa.id_mhs = ?",
         id,
         (error, result) => {
           !error ? resolve(result) : reject(new Error(error));
@@ -41,7 +41,6 @@ module.exports = {
             const newResult = {
               id_nilai: result.insertId,
               ...setData,
-              //... mengambil semua data di setdata
             };
             resolve(newResult);
           } else {
@@ -95,28 +94,6 @@ module.exports = {
         id,
         (error, result) => {
           !error ? resolve(result[0].nilaiRataRata) : reject(new Error(error));
-        }
-      );
-    });
-  },
-  checkMahasiswaById: (id) => {
-    return new Promise((resolve, reject) => {
-      connection.query(
-        `SELECT * FROM mahasiswa WHERE id_mhs = ?`,
-        id,
-        (error, data) => {
-          !error ? resolve(data) : reject(new Error(error));
-        }
-      );
-    });
-  },
-  checkMatkulById: (id) => {
-    return new Promise((resolve, reject) => {
-      connection.query(
-        `SELECT * FROM data_nilai WHERE id_matkul = ?`,
-        id,
-        (error, data) => {
-          !error ? resolve(data) : reject(new Error(error));
         }
       );
     });

@@ -41,6 +41,8 @@ module.exports = {
       result[0].dataNilai = await getDataMhs(id);
       return helper.response(response, 200, "Get id Success", result);
     } catch (error) {
+      console.log(error);
+
       return helper.response(response, 400, "Bad Request", error);
     }
   },
@@ -75,8 +77,6 @@ module.exports = {
         return helper.response(response, 404, "Input Id Mata Kuliah");
       } else if (setData.nilai === "") {
         return helper.response(response, 404, "Input Nilai");
-      } else if (setData.nilai === "") {
-        return helper.response(response, 404, "Input Nilai");
       } else {
         const result = await postDataNilai(setData);
         return helper.response(response, 201, "Data Created", result.id_nilai);
@@ -96,9 +96,9 @@ module.exports = {
         keterangan,
       };
       if (setData.id_mhs === "") {
-        return helper.response(response, 404, ` Input id mahasiswa!`);
+        return helper.response(response, 404, "Input id mahasiswa!");
       } else if (setData.id_matkul === "") {
-        return helper.response(response, 404, ` Input id matkul!`);
+        return helper.response(response, 404, "Input id matkul!");
       } else {
         const checkId = await getDataNilaiById(id);
         if (checkId.length > 0) {

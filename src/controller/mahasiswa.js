@@ -5,10 +5,8 @@ module.exports = {
   getMahasiswa: async (request, response) => {
     try {
       const result = await getMahasiswa();
-      //   console.log(result);
       return helper.response(response, 200, "Success get data", result);
     } catch (error) {
-      //   console.log(error);
       return helper.response(response, 400, "Bad Request", error);
     }
   },
